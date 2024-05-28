@@ -14,29 +14,13 @@ function App() {
 
   const dateN = new Date()
 
-  // const user = {
-  //   name: 'Hedy Lamarr',
-  //   imageUrl: 'https://i.imgur.com/yXOvdOSs.jpg',
-  //   imageSize: 90,
-  // };
-
-
   return (
     <>
 
-         {/* <h1>{user.name}</h1>
-      <img
-        className="avatar"
-        src={user.imageUrl}
-        alt={'Photo of ' + user.name}
-        style={{
-          width: user.imageSize,
-          height: user.imageSize
-        }}
-      /> */}
+    
       <div className="card">
         <p> React Page {dateN.toString()}</p> 
-        <button onClick={() => alert("Damjan is gay")}> Clicke me</button>
+        <button onClick={() => alert("404 not found")}> Clicke me</button>
       </div>       
 
       <Hello name="test">
@@ -47,35 +31,7 @@ function App() {
     </>
   )
   
-   
   
-  // return (
-  //   <>
-    
-  //     <div>
-  //       <a href="https://vitejs.dev" target="_blank">
-  //         <img src={viteLogo} className="logo" alt="Vite logo" />
-  //       </a>
-  //       <a href="https://react.dev" target="_blank">
-  //         <img src={reactLogo} className="logo react" alt="React logo" />
-  //       </a>
-  //     </div>
-
-  //     <h1>Vite + React</h1>
-
-  //     <div className="card">
-  //       <button onClick={() => setCount((count) => count + 1)}>
-  //         count is {count}
-  //       </button>
-  //       <p>
-  //         Edit <code>src/App.jsx</code> and save to test HMR
-  //       </p>
-  //     </div>
-  //     <p className="read-the-docs">
-  //       Click on the Vite and React logos to learn more
-  //     </p>
-  //   </>
-  // )
 }
 
 export default App
