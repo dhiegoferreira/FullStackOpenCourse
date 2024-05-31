@@ -9,9 +9,9 @@ sequenceDiagram
     server-->>browser: reload /example/notes
     deactivate server
 
-    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/html.css
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/note.html
     activate server
-    server-->>browser: the css file
+    server-->>browser: the html
     deactivate server
 
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
