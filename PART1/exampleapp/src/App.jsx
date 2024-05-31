@@ -1,37 +1,33 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
-import Game from './Game.jsx'
 
-const Hello = (name) => {
-  return <p> {name.name}</p>
+
+
+
+
+const Hello = (props) => {
+  console.log(props)
+  return (
+    <div>
+      <p>Hello {props.name}, you are {props.age} year old</p>
+    </div>
+  )
 }
 
 
-function App() {
-  const [count, setCount] = useState(0)
 
-  const dateN = new Date()
+function App() {
+
+  const name = 'Peter'
+  const age = 10
 
   return (
-    <>
+    <div>
+      <h1>Greetins</h1>
+      <Hello name='George'/>
+      <Hello name={name} age={age}/>
 
-    
-      <div className="card">
-        <p> React Page {dateN.toString()}</p> 
-        <button onClick={() => alert("404 not found")}> Clicke me</button>
-      </div>       
-
-      <Hello name="test">
-
-      </Hello>
-    
-    
-    </>
+    </div>
   )
-  
-  
 }
 
 export default App
