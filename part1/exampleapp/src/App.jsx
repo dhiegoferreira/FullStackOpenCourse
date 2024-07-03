@@ -1,8 +1,3 @@
-import './App.css'
-
-
-
-
 
 const Hello = (props) => {
   console.log(props)
