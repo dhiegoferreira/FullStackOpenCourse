@@ -1,23 +1,4 @@
 
-
-
-// const Content = (props) => {
-
-//   return (
-//     <div><h1>{props.Content}</h1></div>
-//   )
-// }
-
-
-
-
-// const Content = ({props}) => {
-//   return(
-//     <li key={props.part.id} > {props.part.name} : {props.part.exercises} </li> 
-//   )
-// }
-
-
 const Parts = ({parts}) => {
   return (
     <ul>
@@ -45,15 +26,10 @@ const Content = (props) => {
 
   const { courses } = props;
 
-  // const totalExercises = 
-
   return (
     <div>
       
       {courses.map(course => <Content key={course.id} content={course} ></Content> )}
-      
-      {/* <p>{course.parts.map(part => <li key={part.id} > {part.name} : {part.exercises} </li>)}</p>       */}
-      {/* <p>{props.course.parts.map(part => <Content key={part.id} part={part}></Content>)}</p> */}
     </div>
   )
  }
