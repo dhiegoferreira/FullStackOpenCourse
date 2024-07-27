@@ -54,7 +54,7 @@ const App = () => {
       setNotes(notes.concat(noteObject))
       setNewNote('')
     })
-    .catch(error => {console.log('erro when execute post method.')})
+   
     
   }
   

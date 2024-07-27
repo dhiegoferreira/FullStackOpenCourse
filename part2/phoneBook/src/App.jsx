@@ -1,46 +1,68 @@
-import { useState } from 'react'
-
+import { useState, useEffect } from 'react'
+import noteService from './services/person'
 
 const Person = ({ person }) => {
   return (
-    <li>{person.name} {person.number}</li>
+    <div>
+      
+      <li><button type="submit">delete</button>{person.name} {person.number}</li>
+    </div>
   )
 }
 
 
-
 const App = () => {
 
-    const [persons, setPersons] = useState([
-      { name: 'Arto Hellas', number: '040-123456', id: 1 },
-      { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
-      { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
-      { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
-    ])
-
-
+  
+  const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState('')
-  const [newNumber, setNewNumber ] = useState('')
-  const [personFilter, setPersonFilter ] = useState('')
+  const [newNumber, setNewNumber] = useState('')
+  const [personFilter, setPersonFilter] = useState('')
 
   console.log(personFilter)
+
   const personToFilter = personFilter.length === 0 ? persons : persons.filter(person => person.name.toUpperCase().startsWith(personFilter.toUpperCase()))
-  
+
+  useEffect(() => {
+    console.log('effect')
+    noteService.getAll().then(retrurnedPerson => {
+      setPersons(retrurnedPerson)
+    })
+      .catch(error => {
+        alert(`the fata wasn´t get.`)
+      })
+  }, [])
+
+
 
   const addPerson = (event) => {
     event.preventDefault()
-    console.log('button clicked',event.target)
+    console.log('button clicked', event.target)
 
 
     const newPerson = {
       name: newName,
       number: newNumber,
-      id: persons.length +1
+      id: persons.length + 1
     }
 
-    setPersons(persons.concat(newPerson))
-    setNewName('')
-    setNewNumber('')
+    if (persons.find(person => person.number === newNumber)) {
+      const obj = persons.find(person => person.number === newNumber);
+      if (confirm(`${obj.name} already added in phoneBook, replace the old number with a new one?`) == true) {
+        noteService.create(newPerson).then(retrurnedPerson => {
+          setPersons(persons.concat(retrurnedPerson))
+          setNewName('')
+          setNewNumber('')
+        })
+      } else {
+        noteService.create(newPerson).then(retrurnedPerson => {
+          setPersons(persons.concat(retrurnedPerson))
+          setNewName('')
+          setNewNumber('')
+        })
+      }
+    }
+
   }
 
   const handleFilterChange = (event) => {
@@ -52,30 +74,30 @@ const App = () => {
   const handleNameChange = (event) => {
     console.log(event.target.value)
     setNewName(event.target.value)
-    
+
   }
 
 
   const handleNumberChange = (event) => {
     console.log(event.target.value)
     setNewNumber(event.target.value)
-   
+
   }
 
   return (
     <div>
       <h2>Phonebook</h2>
-        <div>
-            <p>Filter shown with <input value={personFilter}
-                  onChange={handleFilterChange} 
-            /></p>
-        </div>
+      <div>
+        <p>Filter shown with <input value={personFilter}
+          onChange={handleFilterChange}
+        /></p>
+      </div>
       <h2>add a new</h2>
       <form onSubmit={addPerson}>
-        <div>name: <input value={newName} onChange={handleNameChange}/></div>
-        <div>number: <input value={newNumber} onChange={handleNumberChange}/> </div>
-          
-        
+        <div>name: <input value={newName} onChange={handleNameChange} /></div>
+        <div>number: <input value={newNumber} onChange={handleNumberChange} /> </div>
+
+
         <div>
           <button type="submit">add</button>
         </div>
