@@ -1,12 +1,26 @@
 import { useState, useEffect } from 'react'
-import noteService from './services/person'
+import service from './services/person'
 
 const Person = ({ person }) => {
+  
+
+
+  const deletePerson = (event) => {
+    event.preventDefault()
+    console.log('button clicked', event.target)
+  
+    if (confirm(`Delete ${person.name}?`) == true) {
+      service.remove(person.id)
+    }
+  }
+
+
   return (
-    <div>
-      
-      <li><button type="submit">delete</button>{person.name} {person.number}</li>
-    </div>
+   
+      <div>
+        <li>{person.number}</li>
+      </div>
+    
   )
 }
 
@@ -25,7 +39,7 @@ const App = () => {
 
   useEffect(() => {
     console.log('effect')
-    noteService.getAll().then(retrurnedPerson => {
+    service.getAll().then(retrurnedPerson => {
       setPersons(retrurnedPerson)
     })
       .catch(error => {
@@ -33,6 +47,8 @@ const App = () => {
       })
   }, [])
 
+
+  
 
 
   const addPerson = (event) => {
@@ -49,13 +65,13 @@ const App = () => {
     if (persons.find(person => person.number === newNumber)) {
       const obj = persons.find(person => person.number === newNumber);
       if (confirm(`${obj.name} already added in phoneBook, replace the old number with a new one?`) == true) {
-        noteService.create(newPerson).then(retrurnedPerson => {
+        service.create(newPerson).then(retrurnedPerson => {
           setPersons(persons.concat(retrurnedPerson))
           setNewName('')
           setNewNumber('')
         })
       } else {
-        noteService.create(newPerson).then(retrurnedPerson => {
+        service.create(newPerson).then(retrurnedPerson => {
           setPersons(persons.concat(retrurnedPerson))
           setNewName('')
           setNewNumber('')
@@ -65,6 +81,17 @@ const App = () => {
 
   }
 
+
+  const deletePerson = (event) => {
+    event.preventDefault()
+    console.log('button clicked', event.target)
+  
+    if (confirm(`Delete ${person.name}?`) == true) {
+      service.remove(person.id)
+    }
+  }
+
+  
   const handleFilterChange = (event) => {
     console.log(event.target.value)
     setPersonFilter(event.target.value)
@@ -96,16 +123,16 @@ const App = () => {
       <form onSubmit={addPerson}>
         <div>name: <input value={newName} onChange={handleNameChange} /></div>
         <div>number: <input value={newNumber} onChange={handleNumberChange} /> </div>
-
-
-        <div>
-          <button type="submit">add</button>
-        </div>
+        <div><button type="submit">add</button></div>
       </form>
       <h2>Numbers</h2>
-      <ul>
-        {personToFilter.map(person => <Person key={person.id} person={person}></Person>)}
-      </ul>
+      <form>
+        <div>
+          <ul> 
+            {personToFilter.map(person => <Person key={person.id} person={person}><button type="submit">add</button></Person>)}
+          </ul>
+        </div>
+      </form>
     </div>
   )
 }
