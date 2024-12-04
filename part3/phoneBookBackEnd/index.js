@@ -7,7 +7,7 @@ app.use(express.json()) //json-parser
 
 // const http = require('http')
 
-let phonebook = 
+let persons = 
     [
         { 
           "id": "1",
@@ -32,9 +32,27 @@ let phonebook =
     ]
 
 
-app.get("/api/phonebook", (request,response) => {
-    response.json(phonebook)
+app.get("/info", (request, response) => {
+
+    const amount = persons.length
+
+    const dateNow = new Date(Date.now())
+
+    // const info = () => {
+
+    //     return (
+    //         `Phonebook has info for ${amount} people\n\n${dateNow.toString()}`
+    //     )
+    // }
+
+
+    response.end(`Phonebook has info for ${amount} people\n\n${dateNow.toString()}`)
 })
+
+app.get("/api/persons", (request,response) => {
+    response.json(persons)
+})
+
 
 
 const PORT = 3001
@@ -42,6 +60,8 @@ const PORT = 3001
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })
+
+
 
 
 
