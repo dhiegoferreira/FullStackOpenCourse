@@ -9,10 +9,17 @@
     - [x] A more complex state, debugging React Apps
 
 
-- [x] Part 2: Introduction to React 
+- [x] Part 2: Communicating with Server
 
     - [x] Rendering a collection, modules
     - [x] Forms
     - [x] Getting data from server
     - [x] Altering data in server
     - [x] Adding styles to React Apps.
+
+- [ ] Part 3: Programming a server with NodeJS and Express
+
+    - [ ] Node.js and Express
+    - [ ] Deploying app to internet
+    - [ ] Saving data to MongoDB
+    - [ ] Validation and ESLint

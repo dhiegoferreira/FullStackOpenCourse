@@ -2,6 +2,9 @@
 const express = require('express')
 const app = express()
 
+
+app.use(express.json()) //json-parser
+
 // const http = require('http')
 
 let notes = [
@@ -43,7 +46,7 @@ app.get('/api/notes/:id',(request,response) =>{
 
 
 
-app.get('/api/notes/:id',(request, response) => {
+app.delete('/api/notes/:id',(request, response) => {
 
     const id = request.params.id
 
@@ -53,6 +56,40 @@ app.get('/api/notes/:id',(request, response) => {
     response.status(204).end()
 })
 
+
+const generateId = () => {
+    
+    const maxID = notes.length > 0 ? Math.max(...notes.map(n => Number(n.id))) : 0
+
+    return String(maxId + 1)
+}
+
+
+app.post('/api/notes',(request, response) =>{
+    
+    const body = request.body
+
+
+    if(!body.content){
+        return  response.status(400).json({
+            error: 'content missing'
+        })
+    }
+
+
+    const note = {
+        content: body.content,
+        important: Boolean(body.important) || false,
+        id:generateId()
+    }
+
+
+
+    notes = notes.concat(note)
+    
+    
+    response.json(note)
+})
 
 
 const PORT = 3001
