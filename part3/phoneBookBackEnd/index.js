@@ -1,5 +1,6 @@
 
 const express = require('express')
+
 const app = express()
 
 
@@ -38,14 +39,6 @@ app.get("/info", (request, response) => {
 
     const dateNow = new Date(Date.now())
 
-    // const info = () => {
-
-    //     return (
-    //         `Phonebook has info for ${amount} people\n\n${dateNow.toString()}`
-    //     )
-    // }
-
-
     response.end(`Phonebook has info for ${amount} people\n\n${dateNow.toString()}`)
 })
 
@@ -53,6 +46,14 @@ app.get("/api/persons", (request,response) => {
     response.json(persons)
 })
 
+
+app.get("/api/persons/:id", (request, response) => {
+    const id = request.params.id
+
+    const result = persons.find(person => person.id == id)
+
+    return response.json(result)
+})
 
 
 const PORT = 3001
