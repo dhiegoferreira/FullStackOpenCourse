@@ -50,9 +50,19 @@ app.get("/api/persons", (request,response) => {
 app.get("/api/persons/:id", (request, response) => {
     const id = request.params.id
 
-    const result = persons.find(person => person.id == id)
+    const person = persons.find(person => person.id == id) 
 
-    return response.json(result)
+    return person ? response.json(result) : response.status(402).end()
+})
+
+
+app.delete("/api/persons/:id", (request, response) => {
+    
+    const id = request.params.id
+
+    const personToRemove = persons.filter(person => person.id !== id)
+
+    return personToRemove ? response.json(personToRemove) : response.status(402).end()
 })
 
 
