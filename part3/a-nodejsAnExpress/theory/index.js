@@ -57,12 +57,6 @@ app.delete('/api/notes/:id',(request, response) => {
 })
 
 
-const generateId = () => {
-    
-    const maxID = notes.length > 0 ? Math.max(...notes.map(n => Number(n.id))) : 0
-
-    return String(maxId + 1)
-}
 
 
 app.post('/api/notes',(request, response) =>{
@@ -80,7 +74,7 @@ app.post('/api/notes',(request, response) =>{
     const note = {
         content: body.content,
         important: Boolean(body.important) || false,
-        id:generateId()
+        id: generateId()
     }
 
 
@@ -90,6 +84,14 @@ app.post('/api/notes',(request, response) =>{
     
     response.json(note)
 })
+
+
+const generateId = () => {
+    
+    const maxId = notes.length > 0 ? Math.max(...notes.map(n => Number(n.id))) : 0
+
+    return String(maxId + 1)
+}
 
 
 const PORT = 3001

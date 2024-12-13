@@ -1,12 +1,16 @@
 
 const express = require('express')
-
 const app = express()
+var morgan = require('morgan')
 
 
-app.use(express.json()) //json-parser
+// Define a custom token for the request body
+morgan.token('body', (req) => JSON.stringify(req.body));
 
-// const http = require('http')
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms - :body')
+)
+
+app.use(express.json()) 
 
 let persons = 
     [
@@ -66,43 +70,41 @@ app.delete("/api/persons/:id", (request, response) => {
 })
 
 
-app.post("/api/persons/", (request, response) => {
-    const body = request.body
 
+
+
+app.post("/api/persons", (request, response) => {
     
+    const body = request.body;
+
+
     if(!body.name){
         return  response.status(400).json({
             error: 'name missing'
-        })
+        });
     }
 
     if(!body.number){
         return  response.status(400).json({
             error: 'number missing'
-        })
+        });
     }
 
-    if(persons.find(person => person.name = body.name)){
+    if(persons.find(person => person.name === body.name)){
         return  response.status(400).json({
             error: 'name must be unique'
-        })
+        });
     }
-
-
 
     const person = {
         id: getRandom(),
         name: body.name,
         number: body.number 
-    }
+    };
 
-
-
-    persons = persons.concat(person)
+    persons = persons.concat(person);
     
-    
-    response.json(persons)
-
+    response.json(persons);
 }) 
 
 function getRandom() {
@@ -125,10 +127,3 @@ app.listen(PORT, () => {
 
 
 
-
-
-// const app = http.createServer((request,response) => {
-//     response.writeHead(200,{'Contet-Type':'application/json'})
-//     // response.end('Hello World')
-//     response.end(JSON.stringify(notes))
-// })
