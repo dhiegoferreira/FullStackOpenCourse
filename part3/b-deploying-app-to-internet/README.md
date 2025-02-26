@@ -1,6 +1,6 @@
 - When we run the backend part 2 notes 3001/notes and frontend localhost:5173 and when frontend tries to get data from 3001 we get the CORS error.
 
-![alt text](/part3/b-deploying-app-to-internet/resources/CORS.png)
+![alt text](/part3/resources/CORS.png)
 
 
 localhost/:1 Access to XMLHttpRequest at 'http://localhost:3001/api/notes/' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
@@ -26,4 +26,4 @@ Cross-origin resource sharing (CORS) is a mechanism that allows restricted resou
 
 
 
-![alt text](/part3/b-deploying-app-to-internet/resources/SetupApp.png)
+![alt text](/part3/resources/SetupApp.png)

@@ -4,7 +4,7 @@ import Note from './components/Note'
 import noteService from  './services/notes' 
 
 
-const baseUrl = 'http://localhost:3001/api/notes/'
+const baseUrl = 'http://localhost:3001/api/notes'
 
 const App = () => {
   
