@@ -2,11 +2,14 @@
 const express = require('express')
 const app = express()
 const cors = require('cors')
+var morgan = require('morgan')
 
 
 app.use(cors())
+app.use(express.static('dist'))
 
-var morgan = require('morgan')
+
+
 
 
 // Define a custom token for the request body
