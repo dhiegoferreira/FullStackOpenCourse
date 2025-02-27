@@ -15,3 +15,9 @@
 
 
 Unlike when running the app in a development environment, everything is now in the same node/express-backend that runs in localhost:3001.
+
+
+After deploy this to a Cloud Application Platform like Render we'll have the setup like this:
+
+
+![alt text](/part3/resources/setup-render-notes-app.png)
