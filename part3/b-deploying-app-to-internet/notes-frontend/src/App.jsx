@@ -1,7 +1,6 @@
 import { useState, useEffect} from 'react'
-import axios from 'axios'
-import Note from './components/Note.jsx'
 import noteService from  './services/notes' 
+import Note from './components/Note.jsx'
 import Notification from './components/Notification.jsx'
 
 
@@ -47,11 +46,6 @@ const App = () => {
     
     console.log(`importance of ${id} needs to be toggled.`)
 
-  
-    //const note = notes.find(n => n.id === id)
-    // const changedNote = {...note, important: !note.important}
-    
- 
 
     noteService.update(id).then((returnedNote) => {
       setNotes(notes.map(note => note.id !== id ? note : returnedNote))
