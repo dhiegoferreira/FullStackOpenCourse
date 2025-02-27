@@ -27,3 +27,32 @@ Cross-origin resource sharing (CORS) is a mechanism that allows restricted resou
 
 
 ![alt text](/part3/resources/SetupApp.png)
+
+
+
+> Frontend Production build
+
+When the application is deployed, we must create a production build or a version of the application that is optimized for production.
+
+Since we are using vite:
+
+```bash
+npm run build
+
+```
+
+Will generate a Minified version of our application's javaScript.
+
+Serving static files from the backend
+One option for deploying the frontend is to copy the production build (the dist directory) to the root of the backend repository and configure the backend to show the frontend's main page (the file dist/index.html) as its main page.
+
+We begin by copying the production build of the frontend to the root of the backend. With a Mac or Linux computer, the copying can be done from the frontend directory with the command
+
+- To make Express show static content, the page index.html and the JavaScript, etc., it fetches, we need a built-in middleware from Express called static.
+
+add this to index.js for your backend
+
+```bash
+app.use(express.static('dist'))
+```
+
