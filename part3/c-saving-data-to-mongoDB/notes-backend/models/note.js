@@ -14,7 +14,7 @@ mongoose.connect(url)
   .catch(error => {
     console.log('error connecting to MongoDB:', error.message)
   })
-
+ 
 
 
 const noteSchema = new mongoose.Schema({
@@ -31,3 +31,5 @@ noteSchema.set('toJSON', {
 })
 
 module.exports = mongoose.model('Note', noteSchema)
+
+

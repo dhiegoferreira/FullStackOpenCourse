@@ -30,7 +30,7 @@ const App = () => {
       id: notes.length + 1,
     }
 
-    
+    console.log(noteObject)
     noteService.create(noteObject)
     .then(response => setNotes(notes.concat(response)))
   
