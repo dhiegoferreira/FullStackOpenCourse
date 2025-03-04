@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
-import service from './services/person'
+import personService from './services/person'
 import Person from './components/Person.jsx'
+import Notification from './components/Notification.jsx'
 
 
 
@@ -9,28 +10,30 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [personFilter, setPersonFilter] = useState('')
-  
+  const [errorMessage, setErrorMessage] = useState(null)
+
+
   useEffect(() => {
     console.log('effect')
-    service.getAll().then(retrurnedPerson => {
+    personService.getAll().then(retrurnedPerson => {
       setPersons(retrurnedPerson)
     })
-    .catch(error => {
-      alert(`The source data is disabled or was not found.`.error)
-    })
+      .catch(error => {
+        setErrorMessage(`The source data is disabled or was not found.`.error)
+      })
   }, [])
-  
-  
-  
-    console.log(personFilter)
-  
-    const personToFilter = personFilter.length === 0 ? persons : persons.filter(person => person.name.toUpperCase().startsWith(personFilter.toUpperCase()))
-  
+
+
+
+
+
+  const personToFilter = personFilter.length === 0 ? persons : persons.filter(person => person.name.toUpperCase().startsWith(personFilter.toUpperCase()))
+
 
 
   const addPerson = (event) => {
     event.preventDefault()
-    
+
     console.log('button clicked', event.target)
 
     const newPerson = {
@@ -40,18 +43,33 @@ const App = () => {
     const personFound = persons.find(person => person.name === newName);
     if (personFound) {
       if (confirm(`${personFound.name} already added in phoneBook, replace the old number with a new one?`) == true) {
-        service.update(personFound.id,newPerson).then(returnedPerson => {
+        personService.update(personFound.id, newPerson).then(returnedPerson => {
           setNewName('')
           setNewNumber('')
         })
-      
-    }} else {
-      console.log(newPerson)
-      service.create(newPerson).then(retrurnedPerson => {
+        .catch(error => {
+          
+          setErrorMessage(error.response.data.error)
+        })
+
+      }
+    } else {
+      personService.create(newPerson).then(retrurnedPerson => {
         setPersons(persons.concat(retrurnedPerson))
         setNewName('')
         setNewNumber('')
+      }).catch(error => {
+        console.log(error.name)
+        if (error.name === 'ValidationError') {
+          // Handle Mongoose validation errors
+          setErrorMessage(error.message); // or extract specific error messages
+        } else {
+          // Handle other types of errors (e.g., network errors)
+          console.log(error);
+          setErrorMessage('An unexpected error occurred.');
+        }
       })
+
     }
 
 
@@ -61,28 +79,25 @@ const App = () => {
   const deletePerson = (event) => {
     event.preventDefault()
     console.log('button clicked', event.target)
-  
+
     if (confirm(`Delete ${person.name}?`) == true) {
-      service.remove(person.id)
+      personService.remove(person.id)
     }
   }
 
-  
+
   const handleFilterChange = (event) => {
-    console.log(event.target.value)
     setPersonFilter(event.target.value)
 
   }
 
   const handleNameChange = (event) => {
-    console.log(event.target.value)
     setNewName(event.target.value)
 
   }
 
 
   const handleNumberChange = (event) => {
-    console.log(event.target.value)
     setNewNumber(event.target.value)
 
   }
@@ -90,6 +105,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={errorMessage}/>
       <div>
         <p>Filter shown with <input value={personFilter}
           onChange={handleFilterChange}
@@ -104,7 +120,7 @@ const App = () => {
       <h2>Numbers</h2>
       <form>
         <div>
-          <ul> 
+          <ul>
             {personToFilter.map(person => <Person key={person.id} person={person}></Person>)}
           </ul>
         </div>

@@ -21,6 +21,22 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms - 
 
 
 
+const errorHandler = (error, request, response, next) => {
+    console.error(error.message)
+
+    if (error.name === 'CastError') {
+        return response.status(400).send({ error: 'malformatted id' })
+    }
+
+    next(error)
+}
+
+
+
+const unknownEndpoint = (request, response) => {
+    response.status(404).send({ error: 'unknown endpoint' })
+}
+
 
 app.get("/info", (request, response,next) => {
 
@@ -73,7 +89,7 @@ app.delete("/api/persons/:id", (request, response, next) => {
 })
 
 
-app.put("/api/persons/:id", (request, response) => {
+app.put("/api/persons/:id", (request, response, next) => {
 
     body = request.body
 
@@ -83,6 +99,7 @@ app.put("/api/persons/:id", (request, response) => {
         number: body.number,
     }
 
+    const opts = { runValidators: true }; 
 
     Person.findByIdAndUpdate(request.params.id, person, {
         new: true
@@ -95,7 +112,7 @@ app.put("/api/persons/:id", (request, response) => {
 })
 
 
-app.post("/api/persons", (request, response) => {
+app.post("/api/persons", (request, response, next) => {
 
     const body = request.body;
 
@@ -133,27 +150,14 @@ app.post("/api/persons", (request, response) => {
 
 
 
-const errorHandler = (error, request, response, next) => {
-    console.error(error.message)
-
-    if (error.name === 'CastError') {
-        return response.status(400).send({ error: 'malformatted id' })
-    }
-
-    next(error)
-}
-
-// this has to be the last loaded middleware, also all the routes should be registered before this!
-app.use(errorHandler)
-
-
-const unknownEndpoint = (request, response) => {
-    response.status(404).send({ error: 'unknown endpoint' })
-}
 
 // handler of requests with unknown endpoint
 app.use(unknownEndpoint)
 
+
+
+// this has to be the last loaded middleware, also all the routes should be registered before this!
+app.use(errorHandler)
 
 
 const PORT = process.env.PORT;
