@@ -1,4 +1,4 @@
-# Debbuging
+# Validation and ESLint
 
 In this module we learned remove data hardcode for backend to a no relational database like MongoDB. For this, we first need create a cluster on mongoDB, get the credentials and the URL connection. After this, create an enviornment variable with these values including the connection port.
 
