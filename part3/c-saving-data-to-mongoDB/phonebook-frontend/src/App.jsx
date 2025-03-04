@@ -37,11 +37,10 @@ const App = () => {
       name: newName,
       number: newNumber,
     }
-    const personFound = persons.find(person => person.number === newNumber);
+    const personFound = persons.find(person => person.name === newName);
     if (personFound) {
       if (confirm(`${personFound.name} already added in phoneBook, replace the old number with a new one?`) == true) {
-        service.create(newPerson).then(returnedPerson => {
-          setPersons(persons.concat(returnedPerson))
+        service.update(personFound.id,newPerson).then(returnedPerson => {
           setNewName('')
           setNewNumber('')
         })
