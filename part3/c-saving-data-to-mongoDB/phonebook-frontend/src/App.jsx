@@ -30,31 +30,31 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault()
+    
     console.log('button clicked', event.target)
-
 
     const newPerson = {
       name: newName,
       number: newNumber,
-      id: persons.length + 1
+    }
+    const personFound = persons.find(person => person.number === newNumber);
+    if (personFound) {
+      if (confirm(`${personFound.name} already added in phoneBook, replace the old number with a new one?`) == true) {
+        service.create(newPerson).then(returnedPerson => {
+          setPersons(persons.concat(returnedPerson))
+          setNewName('')
+          setNewNumber('')
+        })
+      
+    }} else {
+      console.log(newPerson)
+      service.create(newPerson).then(retrurnedPerson => {
+        setPersons(persons.concat(retrurnedPerson))
+        setNewName('')
+        setNewNumber('')
+      })
     }
 
-    if (persons.find(person => person.number === newNumber)) {
-      const obj = persons.find(person => person.number === newNumber);
-      if (confirm(`${obj.name} already added in phoneBook, replace the old number with a new one?`) == true) {
-        service.create(newPerson).then(retrurnedPerson => {
-          setPersons(persons.concat(retrurnedPerson))
-          setNewName('')
-          setNewNumber('')
-        })
-      } else {
-        service.create(newPerson).then(retrurnedPerson => {
-          setPersons(persons.concat(retrurnedPerson))
-          setNewName('')
-          setNewNumber('')
-        })
-      }
-    }
 
   }
 

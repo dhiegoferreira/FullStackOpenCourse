@@ -11,7 +11,12 @@ app.use(cors())
 app.use(express.static('dist'))
 app.use(express.json())
 
-
+/* 3
+3.15 - deleting phonebook need works
+3.16 - error handling to error handler middleware
+3.17 - when create a new phonebook enty for peerson, update the phone nhumber for existing phonebook name
+3.18 - api/persons/:id and info routes to use the database, and verify that they work directly with the browser, Postman, or VS Code REST client.
+*/
 
 
 
@@ -41,6 +46,10 @@ app.get("/api/persons", (request, response) => {
     Person.find({}).then(persons => {
         response.json(persons)
     })
+        .catch(error => {
+            console.log(error)
+            response.status(400).end()
+        })
 
 })
 
@@ -49,27 +58,26 @@ app.get("/api/persons/:id", (request, response) => {
     const id = request.params.id
 
 
-    Person.find({}).then(persons => {
-        response.json(persons.id == id)
+    Person.findById(id).then(persons => {
+        response.json(persons.id == id).status(200).end()
     })
+        .catch(error => {
+            console.log(error)
+            response.status(400).end()
+        })
 
-    // return person ? response.json(result) : response.status(402).end()
+
 })
 
 
 app.delete("/api/persons/:id", (request, response) => {
 
-    const id = request.params.id
+    Person.findByIdAndDelete(request.params.id)
+        .then(result => {
+            response.status(204).end()
+        })
+        .catch(error => next(error))
 
-    const personToRemove = persons.filter(person => person.id !== id)
-
-    Person.find({}).then(
-        response.json(persons.filter(person => person.id !== id))
-    )
-
-
-
-    // return personToRemove ? response.json(personToRemove) : response.status(402).end()
 })
 
 
@@ -80,25 +88,25 @@ app.post("/api/persons", (request, response) => {
 
     const body = request.body;
 
-    // console.log(body.name)
-    // console.log(body.number)
+  
     if (!body.name) {
         return response.status(400).json({
             error: 'name missing'
         }).end();
     }
 
-    // console.log("after first validation")
+   
     if (!body.number) {
         return response.status(400).json({
             error: 'number missing'
         }).end();
     }
-    // console.log("after second validation")
-
+   
     Person.find({ name: body.name }).then(result => {
         response.status(400).end()
 
+    }).catch(error => {
+        response.status(400).end()
     });
 
 
@@ -110,20 +118,14 @@ app.post("/api/persons", (request, response) => {
     person.save().then(savedPerson => {
         response.json(savedPerson).end()
     })
+    .catch(error => {
+        console.log(error)
+        response.status(400).end()
+    })
+
 
 
 })
-
-// function getRandom() {
-//     return Math.random() * (0 - Number.MAX_SAFE_INTEGER) + Number.MAX_SAFE_INTEGER;
-// }
-
-// const generateId = () => {
-
-//     const maxID = notes.length > 0 ? Math.max(...notes.map(n => Number(n.id))) : 0
-
-//     return String(maxId + 1)
-// }
 
 
 const PORT = process.env.PORT;
