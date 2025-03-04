@@ -99,7 +99,7 @@ app.post('/api/notes', (request, response) => {
         })
     }
 
-    // console.log(`content:${body.content}`)
+    
     const note = new Note ({
         content: body.content,
         important: Boolean(body.important) || false,
