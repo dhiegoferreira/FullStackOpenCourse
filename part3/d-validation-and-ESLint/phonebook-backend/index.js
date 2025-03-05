@@ -101,38 +101,42 @@ app.put("/api/persons/:id", (request, response, next) => {
 
     const opts = { runValidators: true }; 
 
-    Person.findByIdAndUpdate(request.params.id, person, {
-        new: true
+
+    //querying the selected person
+    const query = Person.find({id: request.params.id})
+
+    if(!query){
+        response.status(400).json("Person not found!").end()
+    }
+
+
+
+
+    Person.findOneAndUpdate(query,person, opts)
+    .then(updatedPerson => {
+        response.json(updatedPerson)
     })
-        .then(updatedPerson => {
-            response.json(updatedPerson)
-        })
-        .catch(error => next(error))
+    .catch(error =>   {
+        response.status(400).json(error).end()
+    } )
+
+    // Person.findByIdAndUpdate(request.params.id, person, {
+    //     new: true
+    // })
+    //     .then(updatedPerson => {
+    //         response.json(updatedPerson)
+    //     })
+    //     .catch(error => next(error))
 
 })
 
 
-app.post("/api/persons", (request, response, next) => {
+app.post("/api/persons", (request, response, ) => {
 
     const body = request.body;
 
-
-    if (!body.name) {
-        return response.status(400).json({
-            error: 'name missing'
-        }).end();
-    }
-
-
-    if (!body.number) {
-        return response.status(400).json({
-            error: 'number missing'
-        }).end();
-    }
-
     Person.find({ name: body.name }).then(result => {
         response.status(400).end()
-
     }).catch(error => next(error))
 
 
@@ -142,8 +146,10 @@ app.post("/api/persons", (request, response, next) => {
     })
 
     person.save().then(savedPerson => {
-        response.json(savedPerson).end()
-    }).catch(error => next(error))
+        response.json(savedPerson).status(201).end()
+    }).catch(error => {
+        response.status(400).json(error).end()
+    })
 
 
 })
@@ -153,7 +159,6 @@ app.post("/api/persons", (request, response, next) => {
 
 // handler of requests with unknown endpoint
 app.use(unknownEndpoint)
-
 
 
 // this has to be the last loaded middleware, also all the routes should be registered before this!
