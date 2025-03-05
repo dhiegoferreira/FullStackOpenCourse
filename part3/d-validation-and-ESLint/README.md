@@ -91,3 +91,17 @@ Now the handling of unknown endpoints is ordered before the HTTP request handler
 - I progress with small steps
 - I will write lots of console.log statements to make sure I understand how the code behaves and to help pinpoint problems
 - if my code does not work, I will not write more code. Instead, I start deleting the code until it works or just return to a state when everything was still working
+
+
+> Install ESLint as a development dependency:
+
+```bash
+npm install eslint @eslint/js --save-dev
+```
+
+
+initialize a default ESLint config:
+
+```bash
+npx eslint --init
+```
