@@ -40,6 +40,8 @@ const App = () => {
       name: newName,
       number: newNumber,
     }
+
+
     const personFound = persons.find(person => person.name === newName);
     if (personFound) {
       if (confirm(`${personFound.name} already added in phoneBook, replace the old number with a new one?`) == true) {
@@ -48,8 +50,14 @@ const App = () => {
           setNewNumber('')
         })
         .catch(error => {
-          
-          setErrorMessage(error.response.data.error)
+          if (error.response.data.name === 'ValidationError') {
+            // Handle Mongoose validation errors
+            setErrorMessage(error.response.data.message); // or extract specific error messages
+          } else {
+            // Handle other types of errors (e.g., network errors)
+            console.log(error);
+            setErrorMessage('An unexpected error occurred.');
+          }
         })
 
       }
@@ -59,10 +67,9 @@ const App = () => {
         setNewName('')
         setNewNumber('')
       }).catch(error => {
-        console.log(error.name)
-        if (error.name === 'ValidationError') {
+        if (error.response.data.name === 'ValidationError') {
           // Handle Mongoose validation errors
-          setErrorMessage(error.message); // or extract specific error messages
+          setErrorMessage(error.response.data.message); // or extract specific error messages
         } else {
           // Handle other types of errors (e.g., network errors)
           console.log(error);
