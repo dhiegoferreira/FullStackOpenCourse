@@ -1,12 +1,12 @@
-import { useState, useEffect} from 'react'
-import noteService from  './services/notes' 
+import { useState, useEffect } from 'react'
+import noteService from './services/notes'
 import Note from './components/Note.jsx'
 import Notification from './components/Notification.jsx'
 
 
 
 const App = () => {
-  
+
   const [notes, setNotes] = useState([])
   const [newNote, setNewNote] = useState('')
   const [showAll, setShowAll] = useState(false)
@@ -31,46 +31,50 @@ const App = () => {
 
     console.log(noteObject)
     noteService.create(noteObject)
-    .then(response => setNotes(notes.concat(response)))
-  
-    
+      .then(response => setNotes(notes.concat(response)))
+
+
     setNewNote('')
-    
+
   }
-  
+
 
   const toggleImportanceOf = (id) => {
-    
+
     console.log(`importance of ${id} needs to be toggled.`)
     const note = notes.find(note => note.id === id)
-    
+
     const noteUpdated = {
-        id: note.id,
-        content: note.content,
-        important: !note.important
+      id: note.id,
+      content: note.content,
+      important: !note.important
     }
-  
+
     noteService.update(id, noteUpdated).then((returnedNote) => {
       setNotes(notes.map(note => note.id !== id ? note : returnedNote))
     })
-    .catch(error => {
-      setErrorMessage(
-        `Note '${returnedNote.content}' was already removed from server`
-      )
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
-      //call back
-      setNotes(notes.filter(n => n.id !== id))
-    })
+      .catch(error => {
+        if (error.response.data.name === 'ValidationError') {
+          // Handle Mongoose validation errors
+          setErrorMessage(error.response.data.message); // o
+        } else {
+
+          `Note '${returnedNote.content}' was already removed from server`
+        }
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+        //call back
+        setNotes(notes.filter(n => n.id !== id))
+      })
 
   }
-  
+
 
   const handleNoteChange = (event) => {
     setNewNote(event.target.value)
   }
-  
+
   const notesToShow = showAll ? notes : notes.filter(note => note.important)
 
   return (
@@ -79,12 +83,12 @@ const App = () => {
       <Notification message={errorMessage} />
       <div>
         <button onClick={() => setShowAll(!showAll)}>
-          show {showAll ? 'important' : 'all' }
+          show {showAll ? 'important' : 'all'}
         </button>
-      </div>      
+      </div>
       <ul>
         <ul>
-          {notesToShow.map(note => 
+          {notesToShow.map(note =>
             <Note
               key={note.id}
               note={note}
@@ -94,9 +98,9 @@ const App = () => {
         </ul>
       </ul>
       <form onSubmit={addNote}>
-        <input value={newNote} onChange={handleNoteChange}/>
+        <input value={newNote} onChange={handleNoteChange} />
         <button type="submit">save</button>
-      </form> 
+      </form>
     </div>
   )
 }

@@ -55,7 +55,6 @@ const App = () => {
             setErrorMessage(error.response.data.message); // or extract specific error messages
           } else {
             // Handle other types of errors (e.g., network errors)
-            console.log(error);
             setErrorMessage('An unexpected error occurred.');
           }
         })
