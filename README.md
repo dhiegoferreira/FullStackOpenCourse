@@ -17,9 +17,15 @@
     - [x] Altering data in server
     - [x] Adding styles to React Apps.
 
-- [ ] Part 3: Programming a server with NodeJS and Express
+- [x] Part 3: Programming a server with NodeJS and Express
 
     - [x] Node.js and Express
     - [x] Deploying app to internet
-    - [ ] Saving data to MongoDB
-    - [ ] Validation and ESLint
+    - [x] Saving data to MongoDB
+    - [x] Validation and ESLint
+
+- [ ] Part 4: Structure of backend application, introduction to testing
+    - [ ] Introduction
+    - [ ] Testing the backend
+    - [ ] User administration
+    - [ ] Token authentication
