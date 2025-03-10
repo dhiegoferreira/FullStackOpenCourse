@@ -1,0 +1,18 @@
+POST http://localhost:3003/api/blogs/ 
+Content-Type: application/json
+
+{
+    "title": "How to use token authentication in react apps",
+    "author": "dhiegoferreira",
+    "url": "medium.com/dhiegoferreira/how-to-use-token-authentication",
+    "likes": 2
+}
+
+
+
+# {
+#     "title": "How to testing the backend node application",
+#     "author": "dhiegoferreira",
+#     "url": "medium.com/dhiegoferreira/how-to-testing-backend-node-app",
+#     "likes": 2
+# }
