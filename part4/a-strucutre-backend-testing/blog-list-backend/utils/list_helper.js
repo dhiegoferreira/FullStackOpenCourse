@@ -5,6 +5,19 @@ const dummy = (blogs) => {
 }
 
 
+
+const totalLikes = (blogs) => {
+
+    var totalLikes = blogs.reduce(function(sum, blogs) {
+            return sum + blogs.likes
+    },0)
+
+    return totalLikes
+
+}
+
+
 module.exports = {
-    dummy
+    dummy,
+    totalLikes
 }
