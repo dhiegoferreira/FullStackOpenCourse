@@ -1,9 +1,9 @@
-const dummy = (blogs) => {
-    // ...
+const logger = require('../utils/logger')
 
+
+const dummy = () => {
     return 1
 }
-
 
 
 const totalLikes = (blogs) => {
@@ -16,8 +16,19 @@ const totalLikes = (blogs) => {
 
 }
 
+const favoriteBlog = (blogs) => {
+    
+    const maxLikedBlog = blogs.reduce((max, blog) => (
+        blog.likes > max.likes ? blog : max
+    ),blogs[0])
+
+    return maxLikedBlog
+
+}
+
 
 module.exports = {
     dummy,
-    totalLikes
+    totalLikes,
+    favoriteBlog
 }
