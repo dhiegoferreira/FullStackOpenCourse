@@ -86,67 +86,97 @@ describe('the most likes on blogs', () => {
 
 
 
-describe('largest amount of blogs', () => {
+describe('largest amount of ', () => {
 
 
     const blogs = [
     {
         _id :'5a422aa71b54a676234d17f8',
-        title: '1º Title',
+        title: 'Atricle 1',
         author: 'Author1',
-        url:'https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf',
-        likes: 5,
+        url:'https://blog.com/author1/article1',
+        likes: 2,
         __v: 0
     },
     {
         _id :'6a422aa71b54a676234d17f8',
-        title: '2º Title',
+        title: 'Atricle 2',
         author: 'Author1',
-        url:'https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf',
-        likes: 10,
+        url:'https://blog.com/author1/article2',
+        likes: 1,
      
         __v: 0
     },
     {
         _id :'6a422aa71b54a676234d17f8',
-        title: '2º Title',
+        title: 'Atricle 3',
         author: 'Author1',
-        url:'https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf',
-        likes: 10,
+        url:'https://blog.com/author1/article3',
+        likes: 1,
         __v: 0
     }
     ,
     {
         _id :'7a422aa71b54a676234d17f8',
-        title: '3º Title',
+        title: 'Article 1',
         author: 'Author2',
-        url:'https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf',
-        likes: 15,
+        url:'https://blog.com/author2/article1',
+        likes: 5,
         __v: 0
     }
     ,
     {
         _id :'7a422aa71b54a676234d17f8',
-        title: '4º Title',
+        title: 'Article 2',
         author: 'Author2',
-        url:'https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf',
-        likes: 15,
+        url:'https://blog.com/author2/article2',
+        likes: 5,
         __v: 0
     },
     {
         _id :'7a422aa71b54a676234d17f8',
-        title: '5º Title',
+        title: 'Article 1',
         author: 'Author3',
-        url:'https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf',
-        likes: 15,
+        url:'https://blog.com/author3/article1',
+        likes: 70,
         __v: 0
-    }
+    },
+    {
+        _id :'7a422aa71b54a676234d17f8',
+        title: 'Article 2',
+        author: 'Author3',
+        url:'https://blog.com/author3/article2',
+        likes: 70,
+        __v: 0
+    },
+    {
+        _id :'7a422aa71b54a676234d17f8',
+        title: 'Article 3',
+        author: 'Author3',
+        url:'https://blog.com/author3/article3',
+        likes: 70,
+        __v: 0
+    },
+    {
+        _id :'7a422aa71b54a676234d17f8',
+        title: 'Article 4',
+        author: 'Author3',
+        url:'https://blog.com/author3/article4',
+        likes: 70,
+        __v: 0
+    },
     ]
 
 
 
     test('should return the author with the most amount of blogs', () => {
-        assert.deepStrictEqual(listHelper.mostBlogs(blogs),{author: 'Author1', blogs: 3})
+        assert.deepStrictEqual(listHelper.mostBlogs(blogs),{author: 'Author3', blogs: 4})
+        
+    })
+
+    test('should return the author whose blogs posts have the largest amount of likes', () => {
+        assert.equal(listHelper.mostLikes(blogs),[])
+        // assert.deepStrictEqual(listHelper.mostLikes(blogs),{author: 'Author3', likes: 70})
         
     })
 

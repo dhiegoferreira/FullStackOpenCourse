@@ -8,19 +8,19 @@ const dummy = () => {
 
 const totalLikes = (blogs) => {
 
-    var totalLikes = blogs.reduce(function(sum, blogs) {
-            return sum + blogs.likes
-    },0)
+    var totalLikes = blogs.reduce(function (sum, blogs) {
+        return sum + blogs.likes
+    }, 0)
 
     return totalLikes
 
 }
 
 const favoriteBlog = (blogs) => {
-    
+
     const maxLikedBlog = blogs.reduce((max, blog) => (
         blog.likes > max.likes ? blog : max
-    ),blogs[0])
+    ), blogs[0])
 
     return maxLikedBlog
 
@@ -28,55 +28,48 @@ const favoriteBlog = (blogs) => {
 
 const mostBlogs = (blogs) => {
 
-    //get list of authors
-    const authors = blogs.map((blog) => {
-        return blog.author
-    }) 
+    if (blogs.length === 0) return null;
 
-    //distinct authors
-    const distictAuthors = [...(new Set(authors))]
+    const authorBlogCounts = blogs.reduce((acc, blog) => {
+        acc[blog.author] = (acc[blog.author] || 0) + 1;
+        return acc;
+    }, {});
+
+   
+
+    const mostBlogsAuthor = Object.keys(authorBlogCounts).reduce((max, author) => {
+        return authorBlogCounts[author] > authorBlogCounts[max] ? author : max;
+    });
+
+    return {
+        author: mostBlogsAuthor,
+        blogs: authorBlogCounts[mostBlogsAuthor]
+    };
 
 
+}
 
-    const topAuthors = []
-    distictAuthors.forEach((author) => {
-        var blogsByAuthor = blogs.filter((blog) => {
-            return blog.author === author
-        })
+const mostLikes = (blogs) => {
 
-        topAuthors.push({
-            author: author,
-            blogs: blogsByAuthor.length
-        })
-    })
+    // if (blogs.length === 0) return null;
 
-    if(topAuthors.length === 0)
-        return 
+    // const likesByAuthorBlogCounts = blogs.reduce((acc, blog) => {
+    //     acc[blog.author] = (acc[blog.author] || 0) + 1;
+    //     return acc;
+    // }, {});
 
-    const mostBlogs = topAuthors.reduce((max, tops) => (
-        tops.blogs > max.blogs ? tops : max
-    ), [topAuthors[0]])
+    return likesByAuthorBlogCounts  
 
-    return mostBlogs[0]
+    const mostBlogsAuthor = Object.keys(likesByAuthorBlogCounts).reduce((max, author) => {
+        return likesByAuthorBlogCounts[author] > likesByAuthorBlogCounts[max] ? author : max;
+    });
 
-    //1 - count the amount of blogs of each author or blog object in blogs and put on this structure
-    /*
-    {
-        author: "Robert C. Martin"
-        blogs: 3
-    }
+    return {
+        author: mostBlogsAuthor,
+        likes: likesByAuthorBlogCounts[mostBlogsAuthor]
+    };
 
-    */
-    // {
-    //     _id :'6a422aa71b54a676234d17f8',
-    //     title: 'Second TITLE',
-    //     author: 'Edsgar W. Dijkstra',
-    //     url:'https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf',
-    //     likes: 10,
-    //     __v: 0
-    // }
-    // ,
-    
+
 
 
 }
@@ -86,5 +79,6 @@ module.exports = {
     dummy,
     totalLikes,
     favoriteBlog,
-    mostBlogs
+    mostBlogs,
+    mostLikes,
 }
