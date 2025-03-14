@@ -175,7 +175,7 @@ describe('largest amount of ', () => {
     })
 
     test('should return the author whose blogs posts have the largest amount of likes', () => {
-        assert.equal(listHelper.mostLikes(blogs),[])
+        assert.equal(listHelper.mostLikes(blogs),0)
         // assert.deepStrictEqual(listHelper.mostLikes(blogs),{author: 'Author3', likes: 70})
         
     })

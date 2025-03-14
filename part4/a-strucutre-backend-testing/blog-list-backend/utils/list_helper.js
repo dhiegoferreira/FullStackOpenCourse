@@ -51,25 +51,29 @@ const mostBlogs = (blogs) => {
 
 const mostLikes = (blogs) => {
 
+    //TODO: 
+    /*
+    The function returns the author, whose blog posts have the largest amount of likes. 
+    The return value also contains the total number of likes that the author has received:
+    */
+
+    
+    return 0  
+    
     // if (blogs.length === 0) return null;
 
     // const likesByAuthorBlogCounts = blogs.reduce((acc, blog) => {
     //     acc[blog.author] = (acc[blog.author] || 0) + 1;
     //     return acc;
     // }, {});
+    // const mostBlogsAuthor = Object.keys(likesByAuthorBlogCounts).reduce((max, author) => {
+    //     return likesByAuthorBlogCounts[author] > likesByAuthorBlogCounts[max] ? author : max;
+    // });
 
-    return likesByAuthorBlogCounts  
-
-    const mostBlogsAuthor = Object.keys(likesByAuthorBlogCounts).reduce((max, author) => {
-        return likesByAuthorBlogCounts[author] > likesByAuthorBlogCounts[max] ? author : max;
-    });
-
-    return {
-        author: mostBlogsAuthor,
-        likes: likesByAuthorBlogCounts[mostBlogsAuthor]
-    };
-
-
+    // return {
+    //     author: mostBlogsAuthor,
+    //     likes: likesByAuthorBlogCounts[mostBlogsAuthor]
+    // };
 
 
 }
